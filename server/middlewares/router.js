@@ -6,7 +6,7 @@ export const router = app => {
     const router = new Router()
 
     // 接收微信服务器推送的get请求时可以获取到参数
-    router.get('/wechat-hear', (ctx, next) => {
+    router.get('/wx', (ctx, next) => {
         const token = config.wechat.token
         // 参数
         const {
@@ -22,6 +22,7 @@ export const router = app => {
         const sha = sha1(str)
 
         console.log(sha === signature)
+        console.log('===========')
         if (sha === signature) {
             ctx.body = echostr
         } else {
