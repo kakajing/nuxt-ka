@@ -5,7 +5,7 @@
   "author": "jing <985812572@qq.com>",
   "private": true,
   "scripts": {
-    "dev": "backpack dev",
+    "dev": "nodemon -w ./server -w ./start.js --exec node ./start.js",
     "build": "nuxt build && backpack build",
     "start": "cross-env NODE_ENV=production node build/main.js",
     "precommit": "npm run lint",
@@ -14,15 +14,19 @@
   "dependencies": {
     "cross-env": "^5.0.1",
     "koa": "^2.4.1",
+    "koa-router": "^7.4.0",
     "nuxt": "latest",
+    "sha1": "^1.1.1",
     "source-map-support": "^0.4.15"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
+    "babel-preset-latest-node": "0.2.2",
+    "babel-preset-stage-3": "6.24.1",
     "backpack-core": "^0.3.0",
     "eslint": "^3.13.1",
-    "eslint-loader": "^1.9.0",
     "eslint-config-standard": "^10.2.1",
+    "eslint-loader": "^1.9.0",
     "eslint-plugin-html": "^2.0.3",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-node": "^4.2.2",
