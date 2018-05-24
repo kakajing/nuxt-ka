@@ -27,10 +27,13 @@ TokenSchema.pre('save', (next) => {
     next()
 })
 
-TokenSchema.static = {
+TokenSchema.statics = {
     // 获取token
     async getAccessToken () {
         const token = await this.findOne({name: 'access_token'}).exec()
+        if (token && token.token) {
+            token.access_token = token.token
+        }
 
         return token
     },
