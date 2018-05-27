@@ -7,8 +7,9 @@ const models = resolve(__dirname, '../database/schema')
 
 // 同步读入模型文件
 fs.readdirSync(models)
-    .filter(file => ~file.search(/^[^\.].*js$/))
-    .forEach(file => require(resolve(models, file)))
+  .filter(file => ~file.search(/^[^\.].*\.js$/))
+  .forEach(file => require(resolve(models, file)))
+
 
 export const database = app => {
     mongoose.set('debug', true)
@@ -25,6 +26,6 @@ export const database = app => {
     })
     // 打开
     mongoose.connection.on('open', async => {
-        console.log('Connected to MongoDB ', config.db)
+        console.log('数据库连接成功 ', config.db)
     })
 }

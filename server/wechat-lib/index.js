@@ -23,8 +23,8 @@ export default class Wechat {
     
         try {
           const response = await request(options)
-          console.log(response)
-          console.log('======================')
+          console.log(response)   
+          console.log('----------')
           return response
         } catch (error) {
           console.error(error)
@@ -45,17 +45,17 @@ export default class Wechat {
     }
 
     // 更新token
-    async updateAccessToken () {      
+    async updateAccessToken () {
         const url = api.accessToken + '&appid=' + this.appID + '&secret=' + this.appSecret
-
+    
         const data = await this.request({url: url})
         const now = (new Date().getTime())
         const expiresIn = now + (data.expires_in - 20) * 1000
-
+    
         data.expires_in = expiresIn
-
+    
         return data
-    }
+      }
 
     // 验证token
     isValidAccessToken (data) {

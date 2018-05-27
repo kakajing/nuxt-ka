@@ -10,7 +10,7 @@ config.dev = !(process.env === 'production')
 // 路径
 const r = path => resolve(__dirname, path)
 const host = process.env.HOST || '127.0.0.1'
-const port = process.env.PORT || 3006
+const port = process.env.PORT || 8080
 const MIDDLEWARES = ['database', 'router']
 
 class Server {

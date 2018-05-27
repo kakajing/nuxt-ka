@@ -1,5 +1,5 @@
 export default {
-    db: 'mongodb://localhost/nuxt-ka',
+    db: 'mongodb://localhost/nuxtka',
     wechat: {
         appID: '你的appID',
         appSecret: '你的appSecret',
