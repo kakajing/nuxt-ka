@@ -8,22 +8,22 @@ const tpl = `
         <MsgType><![CDATA[<%= msgType %>]]></MsgType>
         
         <% if (msgType === 'text') { %>
-            <Content><![CDATA[<%- content%>]]></Content>
-        <% } else if (msgType === 'image') {%>          
+            <Content><![CDATA[<%- content %>]]></Content>
+        <% } else if (msgType === 'image') { %>          
             <Image>
                 <MediaId><![CDATA[<%= content.mediaId %>]]></MediaId>
             </Image>
-        <% } else if (msgType === 'voice') {%> 
+        <% } else if (msgType === 'voice') { %> 
             <Voice>
                 <MediaId><![CDATA[<%= content.mediaId %>]]></MediaId>
             </Voice>
-        <% } else if (msgType === 'video') {%> 
+        <% } else if (msgType === 'video') { %> 
             <Video>
                 <MediaId><![CDATA[<%= content.mediaId %>]]></MediaId>
                 <Title><![CDATA[<%= content.title %>]]></Title>
                 <Description><![CDATA[<%= content.description %>]]></Description>
             </Video> 
-        <% } else if (msgType === 'music') {%> 
+        <% } else if (msgType === 'music') { %> 
             <Music>
                 <Title><![CDATA[TITLE]]></Title>
                 <Description><![CDATA[<%= content.description %>]]></Description>

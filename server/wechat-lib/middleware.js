@@ -44,6 +44,8 @@ export default function (opts, reply) {
             const msg = ctx.weixin
             const xml = util.tpl(replyBody, msg)
 
+            console.log(xml)
+
             ctx.status = 200
             ctx.type = 'application/xml'
             ctx.body = xml
