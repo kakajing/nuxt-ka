@@ -4,6 +4,7 @@ import * as util from './util'
 
 
 export default function (opts, reply) {
+    // 接收微信服务器推送的get请求时可以获取到参数
     return async function wechatMiddel (ctx, next) {       
         const token = opts.token
         // 参数
