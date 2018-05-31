@@ -3,7 +3,15 @@ const tip = '亲爱的黑虎，欢迎来到青青大草原\n' + '点击 <a href=
 export default async (ctx, next) => {
     const message = ctx.weixin
 
-    console.log(message)
+    let mp = require('../wechat')
+    let client = mp.getWechat()
+    
+    let userList = [
+        {
+            openid: 'ovnX60c-ISJaOxLX3c5QamVuc8-g',
+            lang: 'zh_CN'
+        }
+    ]
 
     if (message.MsgType === 'event') {
         if (message.Event === 'subscribe') {
@@ -14,6 +22,10 @@ export default async (ctx, next) => {
             ctx.body = message.Latitude + ' : ' + message.Longitude
         }
     } else if (message.MsgType === 'text') {
+        if (message.Content === '1') {
+            const data = await client.handle('batchUserInfo', userList)
+            console.log(data)
+        }
         ctx.body = message.Content
     } else if (message.MsgType === 'image') {
         ctx.body = {
