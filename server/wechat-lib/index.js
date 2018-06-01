@@ -40,6 +40,14 @@ const api = {
         getBlackList: base + 'tags/members/getblacklist?',  // 获取公众号的黑名单列表
         batchBlackUsers: base + 'tags/members/batchblacklist?',  // 拉黑用户
         batchUnblackUsers: base + 'tags/members/batchunblacklist?'  // 取消拉黑用户
+    },
+    menu: {
+        create: base + 'menu/create?',                       // 创建自定义菜单
+        get: base + 'menu/get?',                             // 查询自定义菜单
+        del: base + 'menu/delete?',                          // 删除自定义菜单
+        addCondition: base + 'menu/addconditional?',         // 创建个性化菜单
+        delCondition: base + 'menu/delconditional?',         // 删除个性化菜单
+        getInfo: base + 'get_current_selfmenu_info?'         // 获取自定义菜单配置
     }
 }
 
@@ -338,6 +346,49 @@ export default class Wechat {
     fetchUserList (token, openId) {
         const url = `${api.user.fetchUserList}access_token=${token}&next_openid=${openId || ''}`
 
+        return {url: url}
+    }
+
+    // 创建自定义菜单
+    createMenu (token, menu) {
+        const url = api.menu.create + 'access_token=' + token
+        return {method: 'POST', url: url, body: menu}
+    }
+
+    // 查询自定义菜单
+    getMenu (token) {
+        const url = api.menu.get + 'access_token=' + token
+
+        return {url: url}
+    }
+
+    // 删除自定义菜单
+    delMenu (token) {
+        const url = api.menu.del + 'access_token=' + token
+        return {url: url}
+    }
+
+    // 创建个性化菜单
+    addConditionMenu (token, rule) {
+        const form = {
+            button: menu,
+            matchrule: rule
+        }
+        const url = api.menu.addCondition + 'access_token=' + token
+
+        return {method: 'POST', url: url, body: form}
+    }
+
+    // 删除个性化菜单
+    delConditionMenu (token, menuId) {
+        const form = {menuid: menuId}
+        const url = api.menu.delCondition + 'access_token=' + token
+        return {method: 'POST', url: url, body: form}
+    }
+
+    // 获取自定义菜单配置
+    getCurrentMenuInfo (token) {
+        const url = api.menu.getInfo + 'access_token=' + token
         return {url: url}
     }
 }

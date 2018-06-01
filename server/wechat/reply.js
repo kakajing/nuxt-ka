@@ -13,6 +13,42 @@ export default async (ctx, next) => {
         }
     ]
 
+    let menu = {
+        button: [
+            {
+                name: '一级菜单', 
+                sub_button: [
+                    {
+                        type: 'view', 
+                        name: '用户', 
+                        url: 'https://www.baidu.com/'                   
+                    }
+                ]
+            },
+            {
+                name: '一级菜单', 
+                sub_button: [
+                    {
+                        type: 'view', 
+                        name: '用户', 
+                        url: 'https://www.baidu.com/'                   
+                    }
+                ]
+            },
+            {
+                name: '一级菜单', 
+                sub_button: [
+                    {
+                        type: 'view', 
+                        name: '用户', 
+                        url: 'https://www.baidu.com/'                   
+                    }
+                ]
+            }
+           
+        ]
+    }
+
     if (message.MsgType === 'event') {
         if (message.Event === 'subscribe') {
             ctx.body = tip
@@ -25,7 +61,11 @@ export default async (ctx, next) => {
         if (message.Content === '1') {
             const data = await client.handle('batchUserInfo', userList)
             console.log(data)
+        } else if (message.Content === '2') {
+            const menuData = await client.handle('getMenu')
+            console.log(JSON.stringify(menuData))
         }
+
         ctx.body = message.Content
     } else if (message.MsgType === 'image') {
         ctx.body = {
