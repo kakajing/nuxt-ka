@@ -3,6 +3,7 @@ import formstream from 'formstream'
 import fs from 'fs'
 import * as _ from 'lodash'
 import path from 'path'
+import {sign} from './util'
 
 const base = 'https://api.weixin.qq.com/cgi-bin/'
 // 请求地址
@@ -48,6 +49,9 @@ const api = {
         addCondition: base + 'menu/addconditional?',         // 创建个性化菜单
         delCondition: base + 'menu/delconditional?',         // 删除个性化菜单
         getInfo: base + 'get_current_selfmenu_info?'         // 获取自定义菜单配置
+    },
+    ticket: {
+        get: base + 'ticket/getticket?'                     // 获得jsapi_ticket
     }
 }
 
@@ -90,7 +94,7 @@ export default class Wechat {
         // 获取当前token
         let data = await this.getAccessToken()
         // 验证token是否正确
-        if (!this.isValidAccessToken(data)) {
+        if (!this.isValidToken(data, 'access_token')) {
             data = await this.updateAccessToken()
         }
 
@@ -111,9 +115,34 @@ export default class Wechat {
         return data
       }
 
+      // 获取ticket
+    async fetchTicket (token) {
+        // 获取当前ticket
+        let data = await this.getTicke()
+        // 验证ticket是否正确
+        if (!this.isValidToken(data, 'ticket')) {
+            data = await this.updateTicke(token)
+        }
+
+        await this.saveTicke(data)
+        return data
+    }
+
+    // 更新ticket
+    async updateTicket (token) {
+        const url = api.ticket.get + 'access_token=' + token + '&type=jsapi'
+
+        let data = await this.request({url: url})
+        const now = (new Date().getTime())
+        const expiresIn = now + (data.expires_in - 20) * 1000
+
+        data.expires_in = expiresIn
+        return data
+    }
+
     // 验证token
-    isValidAccessToken (data) {
-        if (!data || !data.accessToken || !data.expires_in) {
+    isValidToken (data) {
+        if (!data || !data[name] || !data.expires_in) {
             return false
         }
         const expiresIn = data.expires_in
@@ -390,5 +419,10 @@ export default class Wechat {
     getCurrentMenuInfo (token) {
         const url = api.menu.getInfo + 'access_token=' + token
         return {url: url}
+    }
+
+    // 生成签名
+    sign (ticket, url) {
+        return this.sign(ticket, url)
     }
 }

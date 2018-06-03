@@ -2,7 +2,7 @@ const tip = '亲爱的黑虎，欢迎来到青青大草原\n' + '点击 <a href=
 
 export default async (ctx, next) => {
     const message = ctx.weixin
-
+    console.log(message)
     let mp = require('../wechat')
     let client = mp.getWechat()
     
@@ -13,42 +13,6 @@ export default async (ctx, next) => {
         }
     ]
 
-    let menu = {
-        button: [
-            {
-                name: '一级菜单', 
-                sub_button: [
-                    {
-                        type: 'view', 
-                        name: '用户', 
-                        url: 'https://www.baidu.com/'                   
-                    }
-                ]
-            },
-            {
-                name: '一级菜单', 
-                sub_button: [
-                    {
-                        type: 'view', 
-                        name: '用户', 
-                        url: 'https://www.baidu.com/'                   
-                    }
-                ]
-            },
-            {
-                name: '一级菜单', 
-                sub_button: [
-                    {
-                        type: 'view', 
-                        name: '用户', 
-                        url: 'https://www.baidu.com/'                   
-                    }
-                ]
-            }
-           
-        ]
-    }
-
     if (message.MsgType === 'event') {
         if (message.Event === 'subscribe') {
             ctx.body = tip
@@ -56,14 +20,19 @@ export default async (ctx, next) => {
             console.log('取消关注')
         } else if (message.Event === 'LOCATION') {
             ctx.body = message.Latitude + ' : ' + message.Longitude
+        } else if (message.Event === 'VIEW') {
+            ctx.body = message.EventKey + message.MenuId
+        } else if (message.Event === 'pic_sysphoto') {
+            ctx.body = message.Count + 'photos sent'
         }
     } else if (message.MsgType === 'text') {
         if (message.Content === '1') {
             const data = await client.handle('batchUserInfo', userList)
-            console.log(data)
         } else if (message.Content === '2') {
-            const menuData = await client.handle('getMenu')
-            console.log(JSON.stringify(menuData))
+            const menu = require('./menu').default
+            
+            await client.handle('createMenu', menu)
+            
         }
 
         ctx.body = message.Content
