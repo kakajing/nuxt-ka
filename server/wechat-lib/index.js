@@ -73,6 +73,8 @@ export default class Wechat {
         this.appSecret = opts.appSecret
         this.getAccessToken = opts.getAccessToken
         this.saveAccessToken = opts.saveAccessToken
+        this.getTicket = opts.getTicket
+        this.saveTicket = opts.saveTicket
 
         this.fetchAccessToken()
     }
@@ -118,13 +120,13 @@ export default class Wechat {
       // 获取ticket
     async fetchTicket (token) {
         // 获取当前ticket
-        let data = await this.getTicke()
+        let data = await this.getTicket()
         // 验证ticket是否正确
         if (!this.isValidToken(data, 'ticket')) {
-            data = await this.updateTicke(token)
+            data = await this.updateTicket(token)
         }
 
-        await this.saveTicke(data)
+        await this.saveTicket(data)
         return data
     }
 
@@ -141,7 +143,7 @@ export default class Wechat {
     }
 
     // 验证token
-    isValidToken (data) {
+    isValidToken (data, name) {
         if (!data || !data[name] || !data.expires_in) {
             return false
         }
@@ -423,6 +425,6 @@ export default class Wechat {
 
     // 生成签名
     sign (ticket, url) {
-        return this.sign(ticket, url)
+        return sign(ticket, url)
     }
 }

@@ -12,6 +12,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "cross-env": "^5.0.1",
     "ejs": "^2.6.1",
     "formstream": "^1.1.0",
@@ -26,6 +27,7 @@
     "request-promise": "^4.2.2",
     "sha1": "^1.1.1",
     "source-map-support": "^0.4.15",
+    "vuex": "^3.0.1",
     "xml2js": "^0.4.19"
   },
   "devDependencies": {

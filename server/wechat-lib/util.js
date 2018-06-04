@@ -92,18 +92,18 @@ function tpl (content, message) {
     let keys = Object.keys(args)
     let newArgs = {}
     let str = ''
-
+  
     keys = keys.sort()
     keys.forEach((key) => {
       newArgs[key.toLowerCase()] = args[key]
     })
-
+  
     for (let k in newArgs) {
       str += '&' + k + '=' + newArgs[k]
     }
   
     return str.substr(1)
-  }
+  }  
 
   function signIt (nonce, ticket, timestamp, url) {
     const ret = {
@@ -112,10 +112,10 @@ function tpl (content, message) {
       timestamp: timestamp,
       url: url
     }
-
+  
     const string = raw(ret)
     const sha = sha1(string)
-
+  
     return sha
   }
 
