@@ -1,16 +1,37 @@
-import {getWechat} from '../wechat'
+import {getWechat, getOAuth} from '../wechat'
 
 const client = getWechat()
 
 // 获取signature
 export async function getSignatureAsync (url) {
-    const data = await client.getAccessToken()
-    const token = data.access_token
-    const ticketData = await client.fetchTicket(token)
-    const ticket = ticketData.ticket
+  const data = await client.getAccessToken()
+  const token = data.access_token
+  const ticketData = await client.fetchTicket(token)
+  const ticket = ticketData.ticket
 
-    let params = client.sign(ticket, url)
-    params.appId = client.appID
+  let params = client.sign(ticket, url)
+  params.appId = client.appID
 
-    return params
+  return params
+}
+
+// 跳转的url
+export function getAuthorizeURL (...args) {
+  const oauth = getOAuth()
+
+  console.log(oauth)
+
+  return oauth.getAuthorizeURL(...args)
+}
+
+// 获取用户信息
+export async function getUserByCode (code) {
+  // oauth实例
+  const oauth = getOAuth()
+
+  const data = await oauth.fetchAccessToken(code)
+  // const openid = data.openid
+  const user = await oauth.getUserInfo(data.access_token, data.openid)
+
+  return user
 }

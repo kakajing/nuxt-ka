@@ -1,3 +1,3 @@
-import {getSignatureAsync} from './wechat'
+import {getSignatureAsync, getAuthorizeURL, getUserByCode} from './wechat'
 
-export {getSignatureAsync}
+export {getSignatureAsync, getAuthorizeURL, getUserByCode}

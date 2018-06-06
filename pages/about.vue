@@ -19,6 +19,7 @@ export default {
   },
   // 组件安装之前拿到wx
   beforeMount() {
+    // 微信权限认证
     const wx = window.wx
     const url = window.location.href
 
