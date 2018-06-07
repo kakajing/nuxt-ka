@@ -24,6 +24,7 @@ export default {
     this.$store.dispatch('getUserByOAuth', encodeURIComponent(url)).then(res => {
       if (res.data.success) {
         console.log(res.data)
+        console.log('========')
       }
     })
   }

@@ -34,18 +34,16 @@ export async function redirect (ctx, next) {
 // 接收Oauth
 export async function oauth (ctx, next) {
   // 客户端传过来的地址
-  let url = ctx.query.url
-  url = decodeURIComponent(url)
+  const url = ctx.query.url
   // 解析url
-  const urlObj = urlParse(url)
+  const urlObj = urlParse(decodeURIComponent(url))
   const params = queryParse(urlObj.query)
   const code = params.code
-  const user = await api.getUserByCode(code)
 
-  console.log(user)
+  const user = await api.getUserByCode(code)
   
   ctx.body = {
-      success: true,
-      data: user
+    success: true,
+    user: user
   }
 }
