@@ -5,7 +5,11 @@ import getters from './getters'
 
 const createStore = () => {
   return new Vuex.Store({
-    state: {},
+    state: {
+      houses: [],
+      characters: [],
+      cities: []
+    },
     getters,
     actions,
     mutations
