@@ -42,7 +42,7 @@
     },
     methods: {
       showHouse(item) {
-        this.$router.push({
+        this.$router.push({ 
           path: '/house',
           query: {id: item._id}
         })
@@ -62,5 +62,4 @@
   }
 </script>
 
-<style scoped lang='sass' src='../static/sass/index.sass'>
-</style>
+<style scoped lang='sass' src='../static/sass/index.sass'></style>

@@ -14,3 +14,8 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+  body
+    overflow: scroll
+</style>
