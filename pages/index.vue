@@ -42,7 +42,7 @@
     },
     methods: {
       showHouse(item) {
-        this.$router.push({ 
+        this.$router.push({
           path: '/house',
           query: {id: item._id}
         })

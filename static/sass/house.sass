@@ -30,7 +30,13 @@
       .name
         font-size: 2.2em
 
-  .house-history
+  
+
+  .house-body
+    padding: $spacing
+    +border-box
+
+    .house-history
       > *
         width: 100%
         margin-top: $spacing
@@ -45,10 +51,6 @@
         margin: $spacing 0
         text-indent: 2em
         color: $grey-600
-
-  .house-body
-    padding: $spacing
-    +border-box
     
     .title
       +font-dpr(25px)
