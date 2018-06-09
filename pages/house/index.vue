@@ -16,9 +16,9 @@
           .cname {{item.cname}}
           .intro {{item.text}}
   
-    .house-history(v-for='(item, index) in house.sections' :key='index')
-      .title {{item.title}}
-      .content(v-for='text in item.content') {{text}}
+    .house-history(v-for='history in house.sections' :key='history.index')
+      .title {{history.title}}
+      .content(v-for='text in history.content') {{text}}
 </template>
 
 <script>
