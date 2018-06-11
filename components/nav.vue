@@ -26,7 +26,7 @@
           {
             'path': '/shopping',
             'name': 'shopping',
-            'text': '周边手边'
+            'text': '周边手办'
           },
           {
             'path': '/user',
@@ -41,7 +41,7 @@
         return this.$route.name
       },
       navVisible() {
-        return ['index', 'shopping', 'user'].indexOf(this.activeRouter) > -1
+        return ['index', 'shopping', 'user'].indexOf(this.activeRoute) > -1
       }
     }
   }

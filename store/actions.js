@@ -45,5 +45,12 @@ export default {
     state.currentCharacter = res.data.data
 
     return res
+  },
+
+  async fetchProducts({ state }) {
+    const res = await Services.fetchProducts()
+    state.products = res.data.data
+
+    return res
   }
 }
