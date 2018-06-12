@@ -29,7 +29,7 @@
     },
     methods: {
       showProduct(item) {
-        this.router.push({
+        this.$router.push({
           path: '/deal',
           query: {id: item._id}
         })

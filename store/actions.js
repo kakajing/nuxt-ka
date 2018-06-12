@@ -52,5 +52,13 @@ export default {
     state.products = res.data.data
 
     return res
+  },
+
+  async showProduct({ state }, _id) {
+    if (_id === state.currentProduct._id) return
+    const res = await Services.fetchProduct(_id)
+    state.currentProduct = res.data.data
+
+    return res
   }
 }

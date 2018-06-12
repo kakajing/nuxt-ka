@@ -1,0 +1,94 @@
+@import './static/sass/mixin'
+@import './static/sass/color'
+@import './static/sass/var'
+
+.container
+  overflow: hidden !important
+  -webkit-overflow-scrolling: auto
+
+  .product
+    height: 100%
+    +y-scroll
+
+    .focus-goods-swiper
+      width: 100%
+      height: 10rem
+      position: relative
+
+      img
+        width: 100%
+        height: 100%
+    
+    .content
+      width: 100%
+      padding: $spacing
+      color: $grey-700
+      +font-dpr(10px)
+      +border-box
+
+      .price
+        &:before   // 在元素之前添加内容
+          content: '¥'
+          font-size: 1em
+          padding-top: 1px
+          display: inline-block
+          vertical-align: top
+
+        .main-price
+          font-size: 2em
+          margin: 0 3px
+
+        .other-price
+          font-size: 1.3em
+          vertical-align: text-bottom
+
+    .name
+      font-size: 2em
+      color: $grey-900
+      
+    .intro
+      font-size: 1.5em
+      line-height: 1.5em
+      margin: $spacing 0
+
+    .info
+      background: #bde6e2
+      padding: $spacing
+
+      >*
+        padding: $spacing/2 0
+        color: $grey-700
+        transform: scale(0.85)
+      
+      >*:not(:last-child)
+        border-bottom: 1px solid $white
+
+    .attentions
+      margin: $spacing 0
+
+      .title
+        font-size: 1.9em
+
+      ol
+        padding: 0
+        font-size: 1.3em
+        list-style-type: decimal   // 设置列表项标记的类型
+        li
+          list-style-position: inside   // 设置在何处放置列表项标记
+
+    .footer
+      height: $navHeight
+      +border-box
+      border-top: 1px solid $grey-300
+      text-align: center
+      line-height: $navHeight
+      position: absolute
+      bottom: 0
+      left: 0
+
+      span
+        +font-dpr(16px)
+        padding: $navHeight/10 12%
+        color: $white
+        background: $grey-600
+        border-radius: 3px
