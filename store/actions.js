@@ -60,5 +60,12 @@ export default {
     state.currentProduct = res.data.data
 
     return res
+  },
+
+  async fetchUserAndOrders({ state }) {
+    const res = await Services.fetchUserAndOrders()
+    state.user = res.data.data
+
+    return res
   }
 }

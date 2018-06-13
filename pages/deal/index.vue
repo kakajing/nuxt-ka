@@ -10,8 +10,8 @@
 
     .content
       .price(v-if='product.price')
-        span.main-price
-        span.other-price
+        span.main-price {{product.price.toFixed(2) - product.price.toFixed(2).substr(-3)}}
+        span.other-price {{product.price.toFixed(2).substr(-3)}}
 
     .name {{product.name}}
     .intro {{product.intro}}
@@ -20,7 +20,7 @@
     .attentions
       .title 购物提示
       ol
-        li(v-for='item in attentions')
+        li(v-for='item in attentions') {{item}}
     
     .footer
       span(@click='buyProduct') 购买
