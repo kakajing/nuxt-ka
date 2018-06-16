@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
     "cross-env": "^5.0.1",
     "ejs": "^2.6.1",
     "formstream": "^1.1.0",
@@ -24,6 +25,7 @@
     "node-sass": "^4.9.0",
     "nuxt": "latest",
     "pug": "^2.0.3",
+    "ramda": "^0.25.0",
     "raw-body": "^2.3.3",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
