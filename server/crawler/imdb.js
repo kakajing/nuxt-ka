@@ -15,18 +15,14 @@ export const getIMDBCharacters = async () => {
 
   let photos = []
 
-  // console.log(typeof $('table.cast_list tr.odd, tr.even'))
-
   $('table.cast_list tr.odd, tr.even').each(() => {
-    const nmIdDom = $(this).find('td.itemprop a')
+    const nmIdDom = $('td.itemprop').find('a')
     const nmId = nmIdDom.attr('href')
-    const characterDom = $(this).find('td.character a')
-    const name = characterDom.text()
+    const characterDom = $('td.character').find('a:first-child')
     const chId = characterDom.attr('href')
-    const playedByDom = $(this).find('td.itemprop span.itemprop')
+    const name = characterDom.text()
+    const playedByDom = $('td.itemprop').find('span.itemprop')
     const playedBy = playedByDom.text()
-
-    console.log(playedBy)
 
     const data = {
       nmId,
@@ -46,10 +42,11 @@ export const getIMDBCharacters = async () => {
       const match1 = photo.nmId.match(reg1)
       const match2 = photo.chId.match(reg2)
 
-      // console.log(match1)
-
       photo.nmId = match1[1]
-      photo.chId = match2[3]
+      photo.chId = match2[1]
+
+      console.log(photo.chId)
+      console.log('---------------')
       
       return photo
     }),
