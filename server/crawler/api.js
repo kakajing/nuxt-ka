@@ -1,7 +1,7 @@
 import rp from 'request-promise'
 import _ from 'lodash'
 import fs from 'fs'
-import { resolve } from 'path';
+import { resolve } from 'path'
 
 let characters = []
 
