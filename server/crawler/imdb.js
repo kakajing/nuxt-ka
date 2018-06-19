@@ -19,8 +19,8 @@ export const getIMDBCharacters = async () => {
 
   let photos = []
   $('table.cast_list tr.odd, tr.even').each(function() {
-    var  nmIdDom = $('td.itemprop',this).find('a')
-    var nmId = nmIdDom.attr('href')
+    let  nmIdDom = $('td.itemprop',this).find('a')
+    let nmId = nmIdDom.attr('href')
     let characterDom =$('td.character',this).find('a').eq(0)
     let chId = characterDom.attr('href')
     let name = characterDom.text()
@@ -56,53 +56,55 @@ export const getIMDBCharacters = async () => {
   
   photos = fn(photos)
 
-  // console.log(photos)
-
   console.log('清洗后，剩余 ' + photos.length + ' 条数据')
 
   fs.writeFileSync('./imdb.json', JSON.stringify(photos, null, 2), 'utf8')
 }
 
 // 请求头像
-export const fetchIMDbProfile = async (url) => {
+const fetchIMDbProfile = async (url) => {
   const options = {
     uri: url,
     transform: body => cheerio.load(body)
   }
 
   const $ = await rp(options)
-  const img = $('a.poster img')
+  const img = $('div.subpage_title_block a img.poster')
   let src = img.attr('src')
 
   if (src) {
     src = src.split('_V1').shift()
     src += '_V1.jpg'
   }
+  return src
 }
 
 // 获取imdb的人物头像
 export const getIMDbProfile = async () => {
-  const characters = require(__dirname, './wikiCharacters.json')
+  const characters = require(resolve(__dirname, '../../wikiCharacters.json'))
+
+  console.log(characters.length)
 
   for (let i = 0; i < characters.length; i++) {
-    if(!characters[i].profile) {
+    if (!characters[i].profile) {
       const url = `https://www.imdb.com/title/tt0944947/characters/${characters[i].chId}`
       console.log('正在爬取 ' + characters[i].name)
-
       const src = await fetchIMDbProfile(url)
       console.log('已经爬到 ' + src)
+
       characters[i].profile = src
 
       fs.writeFileSync('./imdbCharacters.json', JSON.stringify(characters, null, 2), 'utf8')
 
       await sleep(500)
-    }  
+    }
   }
 }
 
+
 // 检查数据是否包含profile字段
 const checkIMDbProfile = () => {
-  const characters = require(__dirname, './imdbCharacters.json')
+  const characters = require(resolve(__dirname, '../../imdbCharacters.json'))
   const newCharacters = []
 
   characters.forEach((item) => {
@@ -123,12 +125,12 @@ const fetchIMDbImage = async (url) => {
   const $ = await rp(options)
   let images = []
 
-  $('div.media_index_thumb_list a img').each(() => {
+  $('div.titlecharacters-image-grid a img').each(function() {
     let src = $(this).attr('src')
 
     if (src) {
       src = src.split('_V1').shift()
-      srt += '_V1.jpg'
+      src += '_V1.jpg'
       images.push(src)
     }
   })
@@ -137,11 +139,11 @@ const fetchIMDbImage = async (url) => {
 
 // 获取角色剧照
 export const getIMDbImages = async () => {
-  const characters = require(__dirname, './wikiCharacters.json')
+  const characters = require(resolve(__dirname, '../../validCharacters.json'))
 
   for (let i = 0; i < characters.length; i++) {
     if (!characters[i].images) {
-      const url = `https://www.imdb.com/title/tt0944947/characters/${characters[i].chId}?ref_=ttfc_fc_cl_t1#quotes`
+      const url = `https://www.imdb.com/title/tt0944947/characters/${characters[i].chId}`
       console.log('正在爬取 ' + characters[i].name)
       const images = await fetchIMDbImage(url)
       
@@ -154,4 +156,4 @@ export const getIMDbImages = async () => {
   }
 }
 
-getIMDBCharacters()
+getIMDbImages()
