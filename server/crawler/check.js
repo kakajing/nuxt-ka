@@ -12,7 +12,7 @@ const findNameInAPI = (item) => {
   })
 }
 
-const finPlayedByInAPI = (item) => {
+const findPlayedByInAPI = (item) => {
   return find(characters, i => {
     return i.playedBy.includes(item.playedBy)
   })

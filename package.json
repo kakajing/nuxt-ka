@@ -28,7 +28,7 @@
     "ramda": "^0.25.0",
     "raw-body": "^2.3.3",
     "request": "^2.87.0",
-    "request-promise": "^4.2.2",
+    "request-promise": "^4.2.1",
     "sass": "^1.5.1",
     "sass-loader": "^7.0.3",
     "sha1": "^1.1.1",

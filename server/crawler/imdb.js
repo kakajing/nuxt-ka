@@ -18,15 +18,14 @@ export const getIMDBCharacters = async () => {
   let $ = await rp(options)
 
   let photos = []
-
-  $('div.header table.cast_list tr.odd, tr.even').each(() => {
-    const nmIdDom = $('td.itemprop').find('a')
-    const nmId = nmIdDom.attr('href')
-    const characterDom = $('td.character a').eq(0)
-    const chId = characterDom.attr('href')
-    const name = characterDom.text()
-    const playedByDom = $('td.itemprop a').find('span')
-    const playedBy = playedByDom.text()
+  $('table.cast_list tr.odd, tr.even').each(function() {
+    var  nmIdDom = $('td.itemprop',this).find('a')
+    var nmId = nmIdDom.attr('href')
+    let characterDom =$('td.character',this).find('a').eq(0)
+    let chId = characterDom.attr('href')
+    let name = characterDom.text()
+    let playedByDom = $('td.itemprop',this).find('a').find('span')
+    let playedBy = playedByDom.text()
 
     photos.push({
       nmId,
@@ -40,9 +39,12 @@ export const getIMDBCharacters = async () => {
   
   const fn = R.compose(
     R.map(photo => {
-      const reg1 = /\/name\/(.*?)\/\?ref/
-      const match1 = photo.nmId.match(reg1)
-      const str = photo.chId.split('/')[4].replace('?ref_=ttfc_fc_cl_t1', '')
+      let reg1 = /\/name\/(.*?)\/\?ref/
+      let match1 = photo.nmId.match(reg1)
+      let str = photo.chId.split('/')[4] //拿到之后可能为空字符串，分割后会是undefined，那就做一次判断再继续切割
+      if(str){
+        str = str.split('?')[0]
+      }
 
       photo.nmId = match1[1]
       photo.chId = str
@@ -51,7 +53,7 @@ export const getIMDBCharacters = async () => {
     }),
     R.filter(photo => photo.playedBy && photo.name && photo.nmId && photo.chId)
   )
-
+  
   photos = fn(photos)
 
   // console.log(photos)
