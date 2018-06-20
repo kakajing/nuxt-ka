@@ -6,4 +6,4 @@ require('babel-core/register')({
 })
 
 require('babel-polyfill')
-require('./server/crawler/imdb')
+require('./server/crawler/wiki')
