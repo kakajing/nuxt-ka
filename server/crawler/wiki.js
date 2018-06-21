@@ -3,6 +3,8 @@ import R from 'ramda'
 import { resolve } from 'path'
 import fs from 'fs'
 import _ from 'lodash'
+import randomToken from 'random-token'
+import { fetchImage } from '../lib/qiniu'
 
 const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
@@ -96,7 +98,6 @@ export const getWikiCharacters = async () => {
   let data = require(resolve(__dirname, '../../fullCharacters.json'))
   
   console.log(data.lenght)
-  console.log('================')
   data = R.map(getWikiId, data)
   data = await Promise.all(data)
   // console.log('获取 wiki Id')
@@ -110,4 +111,42 @@ export const getWikiCharacters = async () => {
   fs.writeFileSync('./finalCharacters.json', JSON.stringify(data, null, 2), 'utf8')
 }
 
-getWikiCharacters()
+// 上传图片
+export const fetchImageFromIMDb = async () => {
+  let IMDbCharacters = require(resolve(__dirname, '../../finalCharacters.json'))
+
+  // IMDbCharacters = [
+  //   IMDbCharacters[0]
+  // ]
+  IMDbCharacters = R.map(async item => {
+    try {
+      if (item.profile.indexOf('http') === -1) {
+        let key = `${item.nmId}/${randomToken(32)}`
+        await fetchImage(item.profile, key) // 上传图片
+        console.log(key)
+        console.log(item.profile)
+        console.log('upload done!')
+
+        item.profile = key
+      }
+    
+      for (let i = 0; i < item.images.length; i++) {
+        let _key = `${item.nmId}/${randomToken(32)}`
+        await fetchImage(item.images[i], _key)  // 上传剧照
+
+        console.log(_key)
+        console.log(item.images[i])
+        await(100)
+        item.images[i] = _key
+      }
+    } catch (e) {
+      console.log(e)
+    }
+    return item
+  })(IMDbCharacters)
+  IMDbCharacters = await Promise.all(IMDbCharacters)
+
+  fs.writeFileSync('./completeCharacters.json', JSON.stringify(IMDbCharacters, null, 2), 'utf8')
+}
+
+fetchImageFromIMDb()
