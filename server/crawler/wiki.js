@@ -5,6 +5,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import randomToken from 'random-token'
 import { fetchImage } from '../lib/qiniu'
+import index from '../config';
 
 const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
@@ -210,4 +211,58 @@ export const getHouses = async () => {
   fs.writeFileSync('./wikiHouses.json', JSON.stringify(data, null, 2), 'utf8')
 }
 
-getHouses()
+// 获取核心家族成员
+export const getSwornMembers = () => {
+  let houses = require(resolve(__dirname, '../../wikiHouses.json'))
+  let characters = require(resolve(__dirname, '../../completeCharacters.json'))
+  console.log(houses.lenght)
+  console.log(characters.lenght)
+
+  const findSwornMembers = R.map(
+    R.compose(
+      i => _.reduce(i, (acc, item) => {
+        acc = acc.concat(item)
+
+        return acc
+      }, []),
+
+      R.map(i => {
+        let item = R.find(R.propEq('cname', i[0]))(characters)
+
+        return {
+          character: item.nmId,
+          text: i[1]
+        }
+      }),
+
+      R.filter(item => R.find(R.propEq('cname', item[0]))(characters)),
+
+      R.map(i => {
+        let item = i.split('，')
+        let name = item.shift()
+
+        return [name.replace(/(【|】|爵士|一世女王|三世国王|公爵|国王|王后|夫人|公主|王子)/g, ''), item.join('，')]
+      }),
+
+      R.nth(1),
+      R.splitAt(1),
+      R.prop('content'),
+      R.nth(0),
+      R.filter(i => R.test(/伊耿历三世纪末的/, i.title)),
+      R.prop('sections')
+    )
+  )
+
+  let swornMembers = findSwornMembers(houses)
+  console.log(swornMembers)
+
+  houses = _.map(houses, (item, index) => {
+    item.swornMembers = swornMembers[index]
+
+    return item
+  })
+
+  fs.writeFileSync('./completeHouses.json', JSON.stringify(houses, null, 2), 'utf8')
+}
+
+getSwornMembers()
