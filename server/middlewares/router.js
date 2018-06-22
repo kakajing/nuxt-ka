@@ -1,20 +1,12 @@
-import Router from 'koa-router'
-import config from '../config'
-import sha1 from 'sha1'
-import reply from '../wechat/reply'
-import wechatMiddle from '../wechat-lib/middleware'
+import Route from '../decorator/router'
 import { resolve } from 'path'
-import { signature, redirect, oauth } from '../controllers/wechat';
+
+
+const r = path => resolve(__dirname, path)
 
 export const router = app => {
-    const router = new Router()
+  const apiPath = r('../routes')
+  const router = new Route(app, apiPath)
 
-    router.all('/wx', wechatMiddle(config.wechat, reply))
-    router.get('/wx-signature', signature)
-    router.get('/wx-redirect', redirect)
-    router.get('/wx-oauth', oauth)
-    
-    app
-        .use(router.routes())
-        .use(router.allowedMethods())
+  router.init()
 }
