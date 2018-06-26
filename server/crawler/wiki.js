@@ -112,39 +112,41 @@ export const getWikiCharacters = async () => {
   fs.writeFileSync('./finalCharacters.json', JSON.stringify(data, null, 2), 'utf8')
 }
 
-// 上传图片
 export const fetchImageFromIMDb = async () => {
-  let IMDbCharacters = require(resolve(__dirname, '../../finalCharacters.json'))
+  let IMDbCharacters = require(resolve(__dirname, '../../completeCharacters.json'))
 
   // IMDbCharacters = [
   //   IMDbCharacters[0]
   // ]
+
   IMDbCharacters = R.map(async item => {
     try {
-      if (item.profile.indexOf('http') === -1) {
-        let key = `${item.nmId}/${randomToken(32)}`
-        await fetchImage(item.profile, key) // 上传图片
-        console.log(key)
-        console.log(item.profile)
-        console.log('upload done!')
+      // let key = `${item.nmId}/${randomToken(32)}`
+      let key = `${item.nmId}` + '/' + `${randomToken(32)}`
+      key = key.replace('\'','')
+      await fetchImage(item.profile, key)
+      console.log('key++++: ' + key)
+      console.log('upload done!')
+      item.profile = key
+      
 
-        item.profile = key
-      }
-    
       for (let i = 0; i < item.images.length; i++) {
-        let _key = `${item.nmId}/${randomToken(32)}`
-        await fetchImage(item.images[i], _key)  // 上传剧照
-
+        // let _key = `${item.nmId}/${randomToken(32)}`
+        let _key = `${item.nmId}` + '/' + `${randomToken(32)}`
+        await fetchImage(item.images[i], _key)
         console.log(_key)
-        console.log(item.images[i])
         await(100)
+
         item.images[i] = _key
+        
       }
     } catch (e) {
       console.log(e)
     }
+
     return item
   })(IMDbCharacters)
+
   IMDbCharacters = await Promise.all(IMDbCharacters)
 
   fs.writeFileSync('./completeCharacters.json', JSON.stringify(IMDbCharacters, null, 2), 'utf8')
@@ -265,4 +267,4 @@ export const getSwornMembers = () => {
   fs.writeFileSync('./completeHouses.json', JSON.stringify(houses, null, 2), 'utf8')
 }
 
-getSwornMembers()
+fetchImageFromIMDb()

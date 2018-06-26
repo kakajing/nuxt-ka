@@ -8,7 +8,7 @@
 
   .house
     padding: 0 0 $spacing
-    +x-scroll
+    +y-scroll
 
     .items
       margin-left: $spacing/2
@@ -38,6 +38,14 @@
           font-size: 1.8em
           color: $grey-700
 
+      .house-flag
+        width: 100%
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .2)
+        overflow: hidden
+
+        img
+          width: 100%
+
 .character
   padding: 0 $spacing
   margin-bottom: $spacing
@@ -63,13 +71,9 @@
       display: inline-block
       margin-bottom: $spacing
 
-      .house-flag
-        width: 100%
-        box-shadow: 0 1px 2px rgba(0, 0, 0, .2)
-        overflow: hidden
-
-        img
-          width: 100%
+      img
+        width: 180px
+        height: 250px
 
       .desc      
         +font-dpr(10px)

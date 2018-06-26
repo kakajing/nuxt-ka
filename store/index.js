@@ -9,7 +9,6 @@ const createStore = () => {
       imageCDN: 'http://omux103p0.bkt.clouddn.com/',
       houses: [],
       characters: [],
-      cities: [],
       currentHouse: {},
       currentCharacter: {},
       products: [],

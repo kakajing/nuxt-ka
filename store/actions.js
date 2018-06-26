@@ -24,12 +24,12 @@ export default {
     return res
   },
 
-  async fetchCities({ state }) {
-    const res = await Services.fetchCities()
-    state.cities = res.data.data
+  // async fetchCities({ state }) {
+  //   const res = await Services.fetchCities()
+  //   state.cities = res.data.data
 
-    return res
-  },
+  //   return res
+  // },
 
   async showHouse({ state }, _id) {
     if (_id === state.currentHouse._id) return

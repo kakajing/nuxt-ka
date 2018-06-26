@@ -10,7 +10,7 @@ export const fetchImage = async (url, key) => {
     const child = exec(bash, {async: true})
 
     child.stdout.on('data', data => {
-      console.log(data)
+      // console.log(data)
       resolve(data)
     })
   })
