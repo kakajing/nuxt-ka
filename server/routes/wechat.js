@@ -38,17 +38,3 @@ export class WechatController {
     await oauth(ctx, next)
   }
 }
-
-
-export const router = app => {
-    const router = new Router()
-
-    router.all('/wx', wechatMiddle(config.wechat, reply))
-    router.get('/wx-signature', signature)
-    router.get('/wx-redirect', redirect)
-    router.get('/wx-oauth', oauth)
-    
-    app
-        .use(router.routes())
-        .use(router.allowedMethods())
-}

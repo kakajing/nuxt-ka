@@ -6,6 +6,7 @@ import _ from 'lodash'
 export let routersMap = new Map()
 export const symbolPrefix = Symbol('prefix')
 export const isArray = v => _.isArray(v) ? v : [v]
+// 将path统一成 '/xxx'
 export const normalizePath = path => path.startsWith('/') ? path : `${path}`
 
 export default class Route {
@@ -14,7 +15,7 @@ export default class Route {
     this.router = new Router()
     this.apiPath = apiPath
   }
-
+ 
   init () {
     glob.sync(resolve(this.apiPath, './*.js')).forEach(require)
 
@@ -33,6 +34,7 @@ export default class Route {
   }
 }
 
+// 将路由类，请求路径以及方法，装饰器对应的方法存入routerMap中
 export const router = conf => (target, key, desc) => {
   conf.path = normalizePath(conf.path)
 
@@ -42,6 +44,7 @@ export const router = conf => (target, key, desc) => {
   }, target[key])
 }
 
+// 将path挂载到路由类的prototype上，实例上可以访问 
 export const controller = path => target => target.prototype[symbolPrefix] = path
 
 export const get = path => router({
