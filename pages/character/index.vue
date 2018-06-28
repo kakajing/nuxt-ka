@@ -1,9 +1,9 @@
 <template lang="pug">
 .container
   .character-header
-    img.background(v-if='character.images', :src='character.images[character.images.length - 1]')
+    img.background(v-if='character.images', :src='imag(character.images[character.images.length - 1])')
     .media
-      img(v-if='character.profile', :src='character.profile')
+      img(v-if='character.profile', :src='prof(character.profile)')
       .desc
         .names
           p.cname {{character.cname}}
@@ -14,7 +14,7 @@
       p(v-for='item in character.intro') {{item}}
 
       .stills
-        img(v-for='(item, index) in character.images', :src='item', :key='index')
+        img(v-for='(item, index) in character.images', :src='imag(item)', :key='index')
 
       .items(v-for='item in character.sections')
         .title {{item.title}}
@@ -30,15 +30,37 @@
         title: '团队成员详情'
       }
     },
-
     computed: {
       ...mapState({
-        character: 'currentCharacter'
+        character: 'currentCharacter',
+        imageCDN: 'imageCDN'
       })
     },
     beforeCreate() {
       let id = this.$route.query.id
       this.$store.dispatch('showCharacter', id)
+    },
+    methods: {
+      prof(profile) {
+        if (this.character) {
+          profile = this.character.profile
+          profile = this.imageCDN + "'" + profile + "'"
+        }
+        return profile
+      },
+      imag(img) {
+        if (this.character.images) {
+          // for (let i = 0; i < this.character.images.length; i++) {
+          //   img = this.character.images[i]
+          //   img = this.imageCDN + "'" + img + "'"
+          // }
+          for (let imagee of this.character.images) {
+            imagee = this.imageCDN + "'" + imagee + "'"
+            img = imagee
+          }
+        }
+        return img
+      }
     }
   }
 </script>

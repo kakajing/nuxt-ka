@@ -20,7 +20,7 @@ export async function getHouse (_id) {
       .findOne({_id: _id})
       .populate({
         path: 'swornMembers.character',
-        select: '_id name cname nmId'
+        select: '_id name profile cname nmId'
       })
       .exec()
     

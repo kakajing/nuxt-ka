@@ -13,7 +13,7 @@
     .title 主要人物 
     .section
       .items(v-for='(item, index) in characters' :key='index' @click='showCharacter(item)')
-        img(:src='item.profile')
+        img(:src='imag(item.profile)')
         .desc
           .playedBy {{item.playedBy}}
           .cname {{item.name}}
@@ -78,9 +78,6 @@
         ]
       }
     },
-    mounted() {
-      // console.log(this.$store.state.characters)
-    },
     computed: {
       ...mapState([
         'imageCDN',
@@ -100,6 +97,15 @@
           path: '/character',
           query: {id: item._id}
         })
+      },
+      imag(profile) {
+        if (this.characters) {
+          for (let char of this.characters) {
+            profile = char.profile
+            profile = this.imageCDN + "'" + profile + "'"
+          }
+          return profile
+        }
       }
     },
     beforeCreate() {

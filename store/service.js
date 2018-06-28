@@ -21,10 +21,10 @@ class Services {
     // return {data: {data: []}, success: true}
   }
 
-  fetchCities() {
-    // return axios.get(`${baseUrl}/wiki/cities`)
-    return {data: {data: []}, success: true}
-  }
+  // fetchCities() {
+  //   // return axios.get(`${baseUrl}/wiki/cities`)
+  //   return {data: {data: []}, success: true}
+  // }
 
   fetchHouse(id) {
     return axios.get(`${baseUrl}/wiki/houses/${id}`)

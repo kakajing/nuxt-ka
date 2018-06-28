@@ -1,9 +1,5 @@
 import api from '../api'
 import { controller, get, post } from '../decorator/router'
-import mongoose from 'mongoose'
-
-const WikiHouse = mongoose.model('WikiHouse')
-const WikiCharacter = mongoose.model('WikiCharacter')
 
 @controller('/wiki')
 export class WechatController {
@@ -53,7 +49,7 @@ export class WechatController {
 
     if (!_id) return (ctx.body = {sucess: false, err: '_id is required'})
 
-    const data = await getCharacter(_id)
+    const data = await api.wiki.getCharacter(_id)
       
     ctx.body = {
       data: data,
