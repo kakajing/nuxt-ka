@@ -37,15 +37,6 @@
         imageCDN: 'imageCDN'
       })
     },
-    // mounted() {
-    //   if (this.house.swornMembers) {
-    //     for (let swornMembers of this.house.swornMembers) {
-    //       let profile = swornMembers.character.profile
-    //       profile = this.imageCDN + "'" + profile + "'"
-    //       console.log(profile)
-    //     }
-    //   }
-    // },
     beforeCreate() {
       let id = this.$route.query.id
       this.$store.dispatch('showHouse', id)
