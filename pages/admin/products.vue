@@ -40,23 +40,23 @@
           input(v-model='edited.price', type='number')
         .input-group
           label 简介
-          input(v-model='edited.intro', @keyup='editedIntro')
+          textarea(v-model='edited.intro', @keyup='editedIntro')
         .input-group
           label 参数
           .parameters
             .inputs(v-for='item, index in edited.parameters')
               input(v-model='item.key', placeholder='名称')
-              input(v-model='item.vlue', placeholder='值')
+              input(v-model='item.value', placeholder='值')
               .remove(@click='removeParameter(index)')
                 .material-icon remove
 
-  .edit-footer
-    button.btn.save(@click='saveEdited', v-if='!isProduct') 创建宝贝
-    button.btn.save(@click='saveEdited', v-if='isProduct') 保存修改
+    .edit-footer
+      button.btn.save(@click='saveEdited', v-if='!isProduct') 创建宝贝
+      button.btn.save(@click='saveEdited', v-if='isProduct') 保存修改
 
-    .btn.add-parameter(@click='addParameter')
-      .material-icon add
-      | 添加参数
+      .btn.add-parameter(@click='addParameter')
+        .material-icon add
+        | 添加参数
 
   .float-btn(@click='createProduct')
     .material-icon add
@@ -69,6 +69,7 @@ import { mapState } from 'vuex'
 import vSnackbar from '../../components/snackbar'
 
 export default {
+  layout: 'admin',
   head() {
     return {
       title: '宝贝列表'
@@ -143,7 +144,7 @@ export default {
       this.edited.parameters.splice(index, 1)
     }
   },
-  component: {
+  components: {
     vSnackbar
   }
 }

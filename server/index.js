@@ -11,7 +11,7 @@ config.dev = !(process.env === 'production')
 const r = path => resolve(__dirname, path)
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 8080
-const MIDDLEWARES = ['database', 'router']
+const MIDDLEWARES = ['database', 'common', 'router']
 
 class Server {
   constructor () {

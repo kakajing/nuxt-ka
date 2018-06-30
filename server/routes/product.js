@@ -1,6 +1,6 @@
 import api from '../api'
 import { controller, get, post, del, put } from '../decorator/router'
-import xxs from 'xxs'
+import xss from 'xss'
 import R from 'ramda'
 
 @controller('/api')
@@ -36,17 +36,18 @@ export class ProductController {
   @post('/products')
   async postProducts (ctx, next) {
     let product = ctx.request.body
+
     console.log(ctx.request)
 
     product = {
-      title: xxs(product.title),
-      price: xxs(product.price),
-      intro: xxs(product.intro),
-      images: R.map(xxs)(product.images),
+      title: xss(product.title),
+      price: xss(product.price),
+      intro: xss(product.intro),
+      images: R.map(xss)(product.images),
       parameters: R.map(
         item => ({
-          key: xxs(item.key),
-          value: xxs(item.value)
+          key: xss(item.key),
+          value: xss(item.value)
         })
       )(product.parameters)
     }
@@ -85,14 +86,14 @@ export class ProductController {
       })
     }
 
-    product.title = xxs(body.title)
-    product.price = xxs(body.price)
-    product.intro = xxs(body.intro)
-    product.images = R.map(xxs)(body.images)
+    product.title = xss(body.title)
+    product.price = xss(body.price)
+    product.intro = xss(body.intro)
+    product.images = R.map(xss)(body.images)
     product.parameters = R.map(
       item => ({
-        key: xxs(item.key),
-        value: xxs(item.value)
+        key: xss(item.key),
+        value: xss(item.value)
       })
     )(product.parameters)
 
@@ -111,7 +112,7 @@ export class ProductController {
   }
 
   // 删除某一个商品
-  @del('products/:id')
+  @del('/products/:id')
   async delProducts (ctx, next) {
     const params = ctx.params
     const {_id} = params
