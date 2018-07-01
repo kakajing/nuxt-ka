@@ -4,7 +4,7 @@
     .swiper(v-swiper:mySwiper='swiperConfig')
       .swiper-wrapper
         .swiper-slide(v-for='item in product.images')
-          img(:src='item')
+          img(:src='imageCDN2 + item')
 
       .swiper-pagination.swiper-pagination-bullets
 
@@ -59,7 +59,8 @@
     },
     computed: {
       ...mapState({
-        'product': 'currentProduct'
+        'product': 'currentProduct',
+        'imageCDN2': 'imageCDN2'
       })
     },
     beforeCreate() {

@@ -7,6 +7,7 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       imageCDN: 'http://omux103p0.bkt.clouddn.com/',
+      imageCDN2: 'http://oxkc6g4t4.bkt.clouddn.com/',
       houses: [],
       characters: [],
       currentHouse: {},

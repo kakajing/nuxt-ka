@@ -2,6 +2,7 @@ import api from '../api'
 import { controller, get, post, del, put } from '../decorator/router'
 import xss from 'xss'
 import R from 'ramda'
+import * as qiniu from '../lib/qiniu'
 
 @controller('/api')
 export class ProductController {
@@ -112,19 +113,23 @@ export class ProductController {
   }
 
   // 删除某一个商品
-  @del('/products/:id')
+  @del('/products/:_id')
   async delProducts (ctx, next) {
     const params = ctx.params
-    const {_id} = params
+    const { _id } = params
 
-    if (!_id) return (ctx.body = {success: false, err: '_id is required'})
+    if (!_id) {
+      return (ctx.body = {success: false, err: '_id is required'})
+    }
 
     let product = await api.product.getProduct(_id)
 
-    if (!product) return (ctx.body = {success: false, err: 'product is required'})
+    if (!product) {
+      return (ctx.body = {success: false, err: 'product not exist'})
+    }
 
     try {
-      product = await api.product.del(product)
+      await api.product.del(product)
       ctx.body = {
         success: true
       }

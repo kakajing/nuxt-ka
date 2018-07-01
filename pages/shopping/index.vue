@@ -4,7 +4,7 @@
     .title 商城周边
     .list
       .items(v-for='(item, index) in products' :key='index' @click='showProduct(item)')
-        img(:src='item.images[0]')
+        img(:src='imageCDN2 + item.images[0]')
         .body
           .title {{item.title}}
           .content {{item.intro}}
@@ -21,7 +21,8 @@
     },
     computed: {
       ...mapState([
-        'products'
+        'products',
+        'imageCDN2'
       ])
     },
     beforeCreate() {
