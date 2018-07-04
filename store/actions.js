@@ -2,6 +2,41 @@ import Services from './service'
 import axios from 'axios'
 
 export default {
+  // 与服务器同步，判断session中是否有user，如果有设置到user数据库中
+  nuxtServerInit({ commit }, { req }) {
+    if (req.session && req.session.user) {
+      const { email, nickname, avatarUrl } = req.session.user
+      const user = {
+        email,
+        nickname,
+        avatarUrl
+      }
+      commit('SET_USER', user)
+    }
+  },
+
+  async login({ commit }, { email, password }) {
+    try {
+      let res = await axios.post('/login', { email, password })
+
+      const { data } = res
+
+      if (data.success) commit('SET_USER', data.data)
+
+      return data
+    } catch (e) {
+      if (e.response.status === 401) {
+        throw new Error('来错地方了')
+      }
+    }
+  },
+
+  async logout({ commit }) {
+    await axios.post('/admin/logout')
+
+    commit('SET_USER', null)
+  },
+
   // 签名
   getWechatSignature({ commit }, url) {
     return Services.getWechatSignature(url)
@@ -24,13 +59,6 @@ export default {
 
     return res
   },
-
-  // async fetchCities({ state }) {
-  //   const res = await Services.fetchCities()
-  //   state.cities = res.data.data
-
-  //   return res
-  // },
 
   async showHouse({ state }, _id) {
     if (_id === state.currentHouse._id) return

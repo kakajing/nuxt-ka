@@ -43,6 +43,8 @@ class Server {
     this.app.use(async (ctx, next) => {
       await next()
       ctx.status = 200 // koa defaults to 404 when it sees that status is unset
+      ctx.req.session = ctx.session
+
       return new Promise((resolve, reject) => {
         ctx.res.on('close', resolve)
         ctx.res.on('finish', resolve)
