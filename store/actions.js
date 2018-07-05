@@ -37,6 +37,10 @@ export default {
     commit('SET_USER', null)
   },
 
+  setAuthUser({ commit }, authUser) {
+    commit('SET_AUTHUSER', authUser)
+  },
+
   // 签名
   getWechatSignature({ commit }, url) {
     return Services.getWechatSignature(url)
