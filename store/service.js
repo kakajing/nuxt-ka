@@ -12,6 +12,10 @@ class Services {
     return axios.get(`${baseUrl}/wx-oauth?url=${url}`)
   }
 
+  getWechOAuth(url) {
+    return axios.get(`${baseUrl}/wx-oauth?url=${encodeURIComponent(url)}`)
+  }
+
   fetchHouses() {
     return axios.get(`${baseUrl}/wiki/houses`)
   }

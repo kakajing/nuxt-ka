@@ -50,6 +50,10 @@ export default {
     return Services.getUserByOAuth(url)
   },
 
+  getUserOAuth({ commit }, url) {
+    return Services.getWechOAuth(url)
+  },
+
   async fetchHouses({ state }) {
     const res = await Services.fetchHouses()
     state.houses = res.data.data

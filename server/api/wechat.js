@@ -32,16 +32,16 @@ export async function getUserByCode (code) {
   // oauth实例
   const oauth = getOAuth()
 
-  console.log(oauth)
-
   const data = await oauth.fetchAccessToken(code)
   console.log(data)
  
-  const user = await oauth.getUserInfo(data.access_token, data.openid)
+  const openid = data.openid
+  const user = await oauth.getUserInfo(data.access_token, openid)
+  // const user = await oauth.getUserInfo(data.access_token, data.unionid)
   console.log('user')
   console.log(user)
 
-  const existUser = await User.findOne({openid: data.openid}).exec()
+  const existUser = await User.findOne({openid: openid}).exec()
   console.log('existUser')
   console.log(existUser)
 
