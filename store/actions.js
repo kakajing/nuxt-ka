@@ -37,8 +37,9 @@ export default {
     commit('SET_USER', null)
   },
 
-  setAuthUser({ commit }, authUser) {
-    commit('SET_AUTHUSER', authUser)
+  async createOrder({ state }, obj) {
+    const { data } = Services.createOrder(obj)
+    return data
   },
 
   // 签名
@@ -52,6 +53,10 @@ export default {
 
   getUserOAuth({ commit }, url) {
     return Services.getWechOAuth(url)
+  },
+
+  setAuthUser({ commit }, authUser) {
+    commit('SET_AUTHUSER', authUser)
   },
 
   async fetchHouses({ state }) {

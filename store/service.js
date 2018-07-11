@@ -16,6 +16,15 @@ class Services {
     return axios.get(`${baseUrl}/wx-oauth?url=${encodeURIComponent(url)}`)
   }
 
+  createOrder({ productId, name, address, phoneNumber }) {
+    return axios.post(`${baseUrl}/wechat-pay`, {
+      productId,
+      name,
+      address,
+      phoneNumber
+    })
+  }
+
   fetchHouses() {
     return axios.get(`${baseUrl}/wiki/houses`)
   }

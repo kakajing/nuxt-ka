@@ -25,7 +25,7 @@ export async function redirect (ctx, next) {
   // 参数
   const { visit, id } = ctx.query
   const params = id ? `${visit}_${id}` : visit
-
+  
   const url = api.wechat.getAuthorizeURL(scope, target, params)
 
   ctx.redirect(url)
