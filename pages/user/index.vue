@@ -3,7 +3,7 @@
   .user(v-if='user')
     .user-header
       .text {{user.nickname}}
-      img(:src='user.avatar')
+      img(:src='imageCDN + user.avatar')
     .user-address
       cell(title='收获地址')
       .user-content {{user.address}}
@@ -19,13 +19,13 @@
     .user-order(v-if='user.orders')
       cell(title='我的订单')
       .user-order-items(v-for='item in user.orders')
-        img(:src='item.image')
+        img(:src='imageCDN + item.images[0]')
         .user-order-intro
-          .title {{item.title}}
-          .content {{item.intro}}
+          .title {{item.product.title}}
+          .content {{item.product.intro}}
 
         .user-order-price
-          span ￥{{item.price}}
+          span ￥{{item.product.price}}
 </template>
 
 <script>
@@ -40,7 +40,8 @@
     },
     computed: {
       ...mapState([
-        'user'
+        'user',
+        'imageCDN'
       ])
     },
     beforeCreate() {

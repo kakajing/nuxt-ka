@@ -6,7 +6,7 @@ import path from 'path'
 const cert = path.resolve(__dirname, '../', 'config/cert/apiclient_cert.p12')
 
 const paymentConfig = {
-  appId: config.shop.appId,
+  appId: config.shop.appId,             // 商户id
   partnerKey: config.shop.partnerKey,
   mchId: config.shop.mchId,
   notifyUrl: config.shop.notifyUrl,   // 通知地址

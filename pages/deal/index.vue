@@ -52,7 +52,7 @@
 <script>
   import cell from '../../components/cell.vue'
   import { mapState } from 'vuex'
-  import wechat from '../static/mixins/wechat.js'
+  import wechat from '../../static/mixins/wechat.js'
 
   // 控制modal
   function toggleModal(obj, content) {
@@ -112,7 +112,7 @@
 
         // 创建订单
         const res = await this.$store.dispatch('createOrder', {
-          productId: this.product.id
+          productId: this.product.id,
           name: name,
           address: address,
           phoneNumber: phoneNumber

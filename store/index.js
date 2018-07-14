@@ -15,7 +15,8 @@ const createStore = () => {
       products: [],
       currentProduct: [],
       user: null,
-      authUser: null
+      authUser: null,
+      payments: []
     },
     getters,
     actions,

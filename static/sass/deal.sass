@@ -2,6 +2,8 @@
 @import './static/sass/color'
 @import './static/sass/var'
 
+$swiperHeight: 7rem
+
 .container
   overflow: hidden !important
   -webkit-overflow-scrolling: auto
@@ -166,17 +168,17 @@
         justify-content: center
         align-items: center
 
-    .modal
-      position: fixed
-      top: 50%
-      left: 50%
-      transform: translate(-50%, -50%)
-      padding: .8em 1.5em
-      text-align: center
-      z-index: 999
-      background: rgba(0, 0, 0, .8)
-      color: $white
-      +font-dpr(16px)
+  .modal
+    position: fixed
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    padding: .8em 1.5em
+    text-align: center
+    z-index: 999
+    background: rgba(0, 0, 0, .8)
+    color: $white
+    +font-dpr(16px)
 
 .slide-top-enter-active, .slide-top-leave-active
   transition: transform .3s linear

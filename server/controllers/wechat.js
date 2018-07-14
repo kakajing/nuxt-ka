@@ -1,4 +1,3 @@
-import * as api from '../api'
 import { parse as urlParse } from 'url'
 import { parse as queryParse } from 'querystring'
 import config from '../config'

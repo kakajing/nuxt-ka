@@ -58,6 +58,10 @@ class Services {
   fetchUserAndOrders() {
     return axios.get(`${baseUrl}/api/user`)
   }
+
+  getPayments() {
+    return axios.get(`${baseUrl}/admin/payments`)
+  }
 }
 
 export default new Services()
