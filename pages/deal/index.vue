@@ -52,6 +52,7 @@
 <script>
   import cell from '../../components/cell.vue'
   import { mapState } from 'vuex'
+  import wechat from '../static/mixins/wechat.js'
 
   // 控制modal
   function toggleModal(obj, content) {
@@ -64,7 +65,8 @@
   }
 
   export default {
-    middleware: 'wechat-auth',
+    // middleware: 'wechat-auth',
+    mixins: [wechat],
     head() {
       return {
         title: '购买页面'

@@ -3,7 +3,7 @@ import config from '../config'
 import reply from '../wechat/reply'
 import wechatMiddle from '../wechat-lib/middleware'
 import { resolve } from 'path'
-import { signature, redirect, oauth } from '../controllers/wechat'
+import { signature, redirect, oauth, wechatPay } from '../controllers/wechat'
 
 @controller('')
 export class WechatController {
@@ -21,6 +21,12 @@ export class WechatController {
     const body = await middle(ctx, next)
 
     ctx.body = body
+  }
+
+  @post('/wx-pay')
+  @required({ body: ['productId', 'name', 'phoneNumber', 'address' ]})
+  async createdOrder (ctx, next) {
+    await wechatPay(ctx, next)
   }
 
   @get('/wx-signature')

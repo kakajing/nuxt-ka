@@ -2,6 +2,8 @@ import * as api from '../api'
 import { parse as urlParse } from 'url'
 import { parse as queryParse } from 'querystring'
 import config from '../config'
+import { getParamsAsync } from '../wechat-lib/pay'
+import api from '../api'
 
 // 签名
 export async function signature (ctx, next) {
@@ -47,5 +49,58 @@ export async function oauth (ctx, next) {
   ctx.body = {
     success: true,
     user: user
+  }
+}
+
+export async function wechatPay (code) {
+  const ip = ctx.ip.replace('::ffff:', '')
+  const session = ctx.session
+  const { productId, name, phoneNumber, address } = ctx.request.body
+
+  const product = await api.product.findProduct(productId)
+
+  if (!product) {
+    return (ctx.body = {
+      success: false,
+      err: '这个宝贝不在了'
+    })
+  }
+
+  try {
+    let user = await api.user.findUserByUnionId(session.user.unionid).exec()
+
+    if (!user) {
+      user = await api.user.saveFromSession(session)
+    }
+
+    const orderParams = {
+      body: product.title,
+      attach: '公众号周边手办支付',
+      out_trade_no: 'Product' + (+new Date),
+      spbill_create_ip: ip,
+      // total_fee: product.price * 100,
+      total_fee: 0.01 * 100,
+      openid: session.user.unionid,
+      trade_type: 'JSAPI'
+    }
+
+    // 生成预支付订单
+    const order = await getParamsAsync(orderParams)
+    // 生成订单
+    const payment = await api.payment.create(user, product, order, '公众号', {
+      name,
+      address,
+      phoneNumber
+    })
+
+    ctx.body = {
+      success: true,
+      data: payment.order
+    }
+  } catch (e) {
+    ctx.body = {
+      success: false,
+      err: e
+    }
   }
 }
