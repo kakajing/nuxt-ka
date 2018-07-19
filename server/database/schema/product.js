@@ -4,7 +4,7 @@ const Mixed = Schema.Types.Mixed
 
 const ProductSchema = new Schema({
   price: String,
-  title: String,
+  title: Number,
   intro: String,
   images: [String],
   parameters: [

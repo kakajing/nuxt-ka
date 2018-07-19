@@ -1,22 +1,17 @@
 <template lang="pug">
 .container
   .product
-    .swiper(v-swiper:mySwiper='swiperConfig')
-      .swiper-wrapper
-        .swiper-slide(v-for='item in product.images')
-          img(:src='imageCDN2 + item')
-
-      .swiper-pagination.swiper-pagination-bullets
+    .imgs
+      img(v-for='(item, index) in product.images', :src='imageCDN2 + item', :key='index')
 
     .content
       .price(v-if='product.price')
-        span.main-price {{product.price.toFixed(2) - product.price.toFixed(2).substr(-3)}}
-        span.other-price {{product.price.toFixed(2).substr(-3)}}
+        span.main-price {{product.price}}
 
     .name {{product.name}}
     .intro {{product.intro}}
     .info
-      cell(v-for='(item, index) in product.parameters' :key='index' :title='item.key' :content='item.value')
+      cell(v-for='(item, index) in product.parameters' :key='index' :title='item.key' :content='Number(item.value)')
     .attentions
       .title 购物提示
       ol
@@ -145,7 +140,7 @@
             }
           }
         })
-      }
+      },
     },
     computed: {
       ...mapState({
@@ -156,9 +151,7 @@
     async beforeMount() {
       const id = this.$route.query.id
       // const url = window.location.href
-
       this.$store.dispatch('showProduct', id)
-      
     },
     components: {
       cell
