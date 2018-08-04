@@ -1,0 +1,23 @@
+{
+    "db": "mongodb://localhost/nuxtka",
+    "SITE_ROOT_URL": "http://nuxtssr.ngrok.xiaomiqiu.cn",
+    "wechat": {
+      "appID": "你的appID",
+      "appSecret": "你的appSecret",
+      "token": "你的token"
+    },
+    "qiniu": {
+      "AK": "你的七牛云AK",
+      "SK": "你的七牛云SK"
+    },
+    "mina": {
+      "appid": "你的公众平台的appid",
+      "secret": "你的公众平台的secret"
+    },
+    "shop": {
+      "appID": "你的 shop ID",
+      "mchId": "你的 shop mchId",
+      "notifyUrl": "接收通知的 URL",
+      "key": ""
+    }
+  }

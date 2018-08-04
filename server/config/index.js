@@ -1,13 +1,11 @@
-export default {
-  db: 'mongodb://localhost/nuxtka',
-  SITE_ROOT_URL: 'http://nuxtssr.ngrok.xiaomiqiu.cn',
-  wechat: {
-    appID: '你的appID',
-    appSecret: '你的appSecret',
-    token: '你的token'
-  },
-  qiniu: {
-    AK: '你的七牛云AK',
-    SK: '你的七牛云SK'
-  }
-}
+import _ from 'lodash'
+import { resolve } from 'path'
+
+const host = process.env.HOST || 'localhost'
+const env = process.env.NODE_ENV || 'development'
+const conf = require(reslove(__dirname, `./${env}.json`))
+
+export default _.assign({
+  env,
+  host
+}, conf)
