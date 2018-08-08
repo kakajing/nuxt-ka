@@ -96,7 +96,7 @@ const getWikiDetail = async data => {
 }
 
 export const getWikiCharacters = async () => {
-  let data = require(resolve(__dirname, '../../fullCharacters.json'))
+  let data = require(resolve(__dirname, '../database/json/fullCharacters.json'))
   
   console.log(data.lenght)
   data = R.map(getWikiId, data)
@@ -113,7 +113,7 @@ export const getWikiCharacters = async () => {
 }
 
 export const fetchImageFromIMDb = async () => {
-  let IMDbCharacters = require(resolve(__dirname, '../../completeCharacters.json'))
+  let IMDbCharacters = require(resolve(__dirname, '../database/json/completeCharacters.json'))
 
   // IMDbCharacters = [
   //   IMDbCharacters[0]
@@ -215,8 +215,8 @@ export const getHouses = async () => {
 
 // 获取核心家族成员
 export const getSwornMembers = () => {
-  let houses = require(resolve(__dirname, '../../wikiHouses.json'))
-  let characters = require(resolve(__dirname, '../../completeCharacters.json'))
+  let houses = require(resolve(__dirname, '../database/json/wikiHouses.json'))
+  let characters = require(resolve(__dirname, '../database/json/completeCharacters.json'))
   console.log(houses.lenght)
   console.log(characters.lenght)
 
@@ -264,7 +264,7 @@ export const getSwornMembers = () => {
     return item
   })
 
-  fs.writeFileSync('./completeHouses.json', JSON.stringify(houses, null, 2), 'utf8')
+  fs.writeFileSync(resolve(__dirname, '../database/json/completeHouses.json'), JSON.stringify(houses, null, 2), 'utf8')
 }
 
 fetchImageFromIMDb()

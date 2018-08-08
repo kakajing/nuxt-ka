@@ -23,7 +23,7 @@ export const getAPICharacters = async (page = 1) => {
   if (body.length < 50) {
     console.log('爬完了')
   } else {
-    fs.writeFileSync('./character.json', JSON.stringify(characters, null, 2), 'utf8')
+    fs.writeFileSync(resolve(__dirname, '../database/json/characters.json'), JSON.stringify(characters, null, 2), 'utf8')
     await sleep(1000)
     page++
     getAPICharacters(page)

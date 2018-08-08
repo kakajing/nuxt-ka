@@ -81,7 +81,7 @@ const fetchIMDbProfile = async (url) => {
 
 // 获取imdb的人物头像
 export const getIMDbProfile = async () => {
-  const characters = require(resolve(__dirname, '../../wikiCharacters.json'))
+  const characters = require(resolve(__dirname, '../database/json/wikiCharacters.json'))
 
   console.log(characters.length)
 
@@ -104,7 +104,7 @@ export const getIMDbProfile = async () => {
 
 // 检查数据是否包含profile字段
 const checkIMDbProfile = () => {
-  const characters = require(resolve(__dirname, '../../imdbCharacters.json'))
+  const characters = require(resolve(__dirname, '../database/json/imdbCharacters.json'))
   const newCharacters = []
 
   characters.forEach((item) => {
@@ -113,7 +113,7 @@ const checkIMDbProfile = () => {
     }
   })
 
-  fs.writeFileSync('./validCharacters.json', JSON.stringify(newCharacters, null, 2), 'utf8')
+  fs.writeFileSync(resolve(__dirname, '../database/json/validCharacters.json'), JSON.stringify(newCharacters, null, 2), 'utf8')
 }
 
 const fetchIMDbImage = async (url) => {
@@ -139,7 +139,7 @@ const fetchIMDbImage = async (url) => {
 
 // 获取角色剧照
 export const getIMDbImages = async () => {
-  const characters = require(resolve(__dirname, '../../validCharacters.json'))
+  const characters = require(resolve(__dirname, '../database/json/validCharacters.json'))
 
   for (let i = 0; i < characters.length; i++) {
     if (!characters[i].images) {
@@ -150,7 +150,7 @@ export const getIMDbImages = async () => {
       console.log('已经爬到 ' + images.length)
 
       characters[i].images = images
-      fs.writeFileSync('./fullCharacters.json', JSON.stringify(characters, null, 2), 'utf8')
+      fs.writeFileSync(resolve(__dirname, '../database/json/fullCharacters.json'), JSON.stringify(characters, null, 2), 'utf8')
 
     }
   }

@@ -3,8 +3,8 @@ import R from 'ramda'
 import { find } from 'lodash'
 import fs from 'fs'
 
-const characters = require(resolve(__dirname, '../../character.json'))
-const IMDbData = require(resolve(__dirname, '../../imdb.json'))
+const characters = require(resolve(__dirname, '../database/json/character.json'))
+const IMDbData = require(resolve(__dirname, '../database/json/imdb.json'))
 
 const findNameInAPI = (item) => {
   return find(characters, {
@@ -26,4 +26,4 @@ const IMDb = validData(IMDbData)
 
 console.log(IMDb.length)
 
-fs.writeFileSync('./wikiCharacters.json', JSON.stringify(IMDb, null, 2), 'utf8')
+fs.writeFileSync(resolve(__dirname, '../database/json/wikiCharacters.json'), JSON.stringify(IMDb, null, 2), 'utf8')
